@@ -1,10 +1,15 @@
 /**
- * x402 Payment Handling
- * Official x402 SDK - https://github.com/coinbase/x402
+ * x402 Payment Handling - PLACEHOLDER IMPLEMENTATION
+ * 
+ * TODO: Replace with official x402 SDK:
+ *   npm install @x402/core @x402/evm @x402/fetch
+ *   
+ * Official SDK: https://github.com/coinbase/x402
+ * Example:
+ *   import { createPaymentClient } from '@x402/fetch'
+ *   import { createSigner } from '@x402/evm'
  */
 import type { X402PaymentRequest, X402PaymentAuthorization } from '@yield-garden/shared';
-// Note: @x402/fetch provides payment client functionality
-// Install: npm install @x402/core @x402/evm @x402/fetch
 
 export class X402Handler {
   private recipientAddress: string;
