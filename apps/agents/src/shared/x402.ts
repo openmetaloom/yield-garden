@@ -1,154 +1,123 @@
 /**
- * x402 Payment Handling
- * Official x402 SDK integration
- * https://github.com/coinbase/x402
+ * Payment Tracking - XMTP-only implementation (Phase 1)
+ * 
+ * Phase 2 will add real x402 settlement:
+ * - npm install @x402/core @x402/evm
+ * - Replace this with proper EIP-712 payment flow
+ * - Add SIWE for auth
  */
-import {
-  createPaymentRequirements,
-  type PaymentRequirements,
-  type PaymentAuthorization,
-} from '@x402/core';
-import { createSigner, verifyAuthorization } from '@x402/evm';
-import type { X402PaymentRequest, X402PaymentAuthorization } from '@yield-garden/shared';
-import { createWalletClient, http, type Address } from 'viem';
-import { privateKeyToAccount } from 'viem/accounts';
-import { baseSepolia, base } from 'viem/chains';
+import type { PaymentAgreement } from '@yield-garden/shared';
 
-export class X402Handler {
-  private recipientAddress: Address;
-  private chainId: number;
-  private signer: ReturnType<typeof createSigner>;
-
-  constructor(recipientAddress: Address, chainId: number, privateKey: `0x${string}`) {
-    this.recipientAddress = recipientAddress;
-    this.chainId = chainId;
-    
-    // Create viem wallet client for signing
-    const account = privateKeyToAccount(privateKey);
-    const client = createWalletClient({
-      account,
-      chain: chainId === 8453 ? base : baseSepolia,
-      transport: http(),
-    });
-    
-    // Create x402 signer
-    this.signer = createSigner(client);
-  }
+export class PaymentTracker {
+  private agreements: Map<string, PaymentAgreement> = new Map();
 
   /**
-   * Create a payment requirements object (what the client needs to pay)
+   * Record a payment agreement from XMTP conversation
    */
-  createPaymentRequirements(
+  recordAgreement(
+    conversationId: string,
     amountUsdc: number,
-    description: string
-  ): PaymentRequirements {
-    return createPaymentRequirements({
-      scheme: 'exact',
-      network: this.chainId === 8453 ? 'base' : 'base-sepolia',
-      amount: amountUsdc.toString(),
-      recipient: this.recipientAddress,
-      requiredDeadlineSeconds: 300, // 5 minutes
+    description: string,
+    walletAddress: string
+  ): PaymentAgreement {
+    const agreement: PaymentAgreement = {
+      id: `${conversationId}-${Date.now()}`,
+      conversationId,
+      amountUsdc,
       description,
-    });
+      walletAddress,
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+    };
+    
+    this.agreements.set(agreement.id, agreement);
+    return agreement;
   }
 
   /**
-   * Format payment message for XMTP (human readable)
+   * Mark agreement as committed (visitor sent confirmation message)
    */
-  formatPaymentMessage(requirements: PaymentRequirements, workDescription: string): string {
-    const amount = requirements.maxAmountRequired;
-    const network = requirements.network;
+  markCommitted(agreementId: string): PaymentAgreement | null {
+    const agreement = this.agreements.get(agreementId);
+    if (!agreement) return null;
     
-    return `
-💰 Payment Required
+    agreement.status = 'committed';
+    agreement.committedAt = new Date().toISOString();
+    this.agreements.set(agreementId, agreement);
+    return agreement;
+  }
 
-Amount: ${amount} USDC
-Network: ${network}
-Description: ${workDescription}
+  /**
+   * Mark work as started after payment commitment
+   */
+  markWorkStarted(agreementId: string): PaymentAgreement | null {
+    const agreement = this.agreements.get(agreementId);
+    if (!agreement) return null;
+    
+    agreement.status = 'in_progress';
+    agreement.workStartedAt = new Date().toISOString();
+    this.agreements.set(agreementId, agreement);
+    return agreement;
+  }
 
-To proceed, please authorize this payment via x402 protocol.
-Reply with your signed authorization.
+  /**
+   * Get agreement by ID
+   */
+  getAgreement(agreementId: string): PaymentAgreement | null {
+    return this.agreements.get(agreementId) || null;
+  }
 
-Recipient: ${this.recipientAddress}
-Chain ID: ${this.chainId}
+  /**
+   * Get all agreements for a conversation
+   */
+  getAgreementsForConversation(conversationId: string): PaymentAgreement[] {
+    return Array.from(this.agreements.values()).filter(
+      a => a.conversationId === conversationId
+    );
+  }
+
+  /**
+   * Get total committed payments
+   */
+  getTotalCommitted(): number {
+    return Array.from(this.agreements.values())
+      .filter(a => a.status === 'committed' || a.status === 'in_progress' || a.status === 'completed')
+      .reduce((sum, a) => sum + a.amountUsdc, 0);
+  }
+
+  /**
+   * Format payment request message for XMTP
+   */
+  formatPaymentRequest(amountUsdc: number, workDescription: string): string {
+    return `🌱 Payment Request
+
+Amount: ${amountUsdc} USDC
+For: ${workDescription}
+
+To proceed, reply with:
+"I agree to pay ${amountUsdc} USDC"
+
+Note: This is a social agreement via XMTP. Phase 2 will add on-chain settlement.
 `;
   }
 
   /**
-   * Verify a payment authorization from the client
+   * Parse payment agreement from visitor message
    */
-  async verifyAuthorization(
-    authorization: PaymentAuthorization,
-    requirements: PaymentRequirements
-  ): Promise<{ valid: boolean; error?: string }> {
-    try {
-      const isValid = await verifyAuthorization(authorization, requirements);
-      
-      if (!isValid) {
-        return { valid: false, error: 'Invalid authorization signature' };
-      }
-      
-      // Additional checks
-      if (authorization.recipient !== this.recipientAddress.toLowerCase()) {
-        return { valid: false, error: 'Recipient mismatch' };
-      }
-      
-      return { valid: true };
-    } catch (error) {
-      return { valid: false, error: `Verification failed: ${error}` };
-    }
-  }
-
-  /**
-   * Process and settle the payment
-   * Returns transaction hash on success
-   */
-  async settlePayment(
-    authorization: PaymentAuthorization
-  ): Promise<{ success: boolean; txHash?: string; error?: string }> {
-    try {
-      // Use the x402 signer to settle the payment on-chain
-      const result = await this.signer.settlePayment(authorization);
-      
-      return {
-        success: true,
-        txHash: result.transactionHash,
-      };
-    } catch (error) {
-      return {
-        success: false,
-        error: `Settlement failed: ${error}`,
-      };
-    }
-  }
-
-  /**
-   * Parse authorization from client message
-   */
-  parseAuthorization(message: string): PaymentAuthorization | null {
-    try {
-      // Try to extract JSON from message
-      const jsonMatch = message.match(/```json\n?([\s\S]*?)\n?```/);
-      const jsonStr = jsonMatch ? jsonMatch[1] : message;
-      
-      const auth = JSON.parse(jsonStr) as PaymentAuthorization;
-      
-      // Validate required fields
-      if (!auth.authorization || !auth.signature) {
-        return null;
-      }
-      
-      return auth;
-    } catch {
-      return null;
-    }
+  parseAgreement(message: string): { amount: number | null; confirmed: boolean } {
+    const lower = message.toLowerCase();
+    
+    // Check for confirmation patterns
+    const confirmed = /i agree|i'll pay|i will pay|confirmed/i.test(message);
+    
+    // Extract amount
+    const amountMatch = message.match(/(\d+(?:\.\d+)?)\s*usdc?/i);
+    const amount = amountMatch ? parseFloat(amountMatch[1]) : null;
+    
+    return { amount, confirmed };
   }
 }
 
-export function createX402Handler(
-  recipientAddress: Address, 
-  chainId: number,
-  privateKey: `0x${string}`
-): X402Handler {
-  return new X402Handler(recipientAddress, chainId, privateKey);
+export function createPaymentTracker(): PaymentTracker {
+  return new PaymentTracker();
 }
