@@ -201,13 +201,13 @@ export default function GardenStatsCard() {
         />
         
         <StatItem
-          label="Revenue"
-          value={stats.totalRevenueUsdc}
+          label="Committed"
+          value={stats.totalCommittedUsdc}
           prefix="$"
           decimals={2}
           color="pink"
           delay={0.1}
-          statusText="USDC earned"
+          statusText="USDC committed"
         />
         
         <StatItem

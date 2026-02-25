@@ -47,13 +47,13 @@ interface NegotiationCardProps {
 
 function NegotiationCard({ negotiation }: NegotiationCardProps) {
   const getStatusColor = () => {
-    if (negotiation.paymentAuthorized) return 'bg-green-100 text-green-800';
+    if (negotiation.paymentCommitted) return 'bg-green-100 text-green-800';
     if (negotiation.accepted) return 'bg-yellow-100 text-yellow-800';
     return 'bg-gray-100 text-gray-800';
   };
 
   const getStatusText = () => {
-    if (negotiation.paymentAuthorized) return 'Paid';
+    if (negotiation.paymentCommitted) return 'Committed';
     if (negotiation.accepted) return 'Accepted';
     return 'Negotiating';
   };

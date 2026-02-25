@@ -211,14 +211,14 @@ export default function GardenMetrics() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: 'spring', stiffness: 100, damping: 15, delay: 0.1 }}
         >
-          <h4 className="text-xs uppercase tracking-wider text-[var(--garden-dim)] mb-2">Revenue</h4>
+          <h4 className="text-xs uppercase tracking-wider text-[var(--garden-dim)] mb-2">Committed</h4>
           <BreathingCounter 
-            value={stats?.totalRevenueUsdc || 0} 
+            value={stats?.totalCommittedUsdc || 0} 
             prefix="$" 
             decimals={2}
           />
           <div className="text-xs text-[var(--garden-pink)] mt-1">
-            USDC earned
+            USDC committed
           </div>
         </motion.div>
 
