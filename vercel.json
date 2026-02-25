@@ -1,7 +1,5 @@
 {
   "buildCommand": "npm install --ignore-scripts && npm run build",
-  "outputDirectory": "apps/lens/.next",
-  "installCommand": "cd apps/lens && npm install --ignore-scripts",
-  "framework": "nextjs",
-  "projectDirectory": "apps/lens"
+  "outputDirectory": ".next",
+  "installCommand": "npm install --ignore-scripts"
 }
