@@ -1,8 +1,10 @@
 /**
  * x402 Payment Handling
- * Using @coinbase/x402 SDK
+ * Official x402 SDK - https://github.com/coinbase/x402
  */
 import type { X402PaymentRequest, X402PaymentAuthorization } from '@yield-garden/shared';
+// Note: @x402/fetch provides payment client functionality
+// Install: npm install @x402/core @x402/evm @x402/fetch
 
 export class X402Handler {
   private recipientAddress: string;
