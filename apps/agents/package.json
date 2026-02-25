@@ -12,8 +12,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@x402/core": "^0.1.0",
-    "@x402/evm": "^0.1.0",
+    "@x402/core": "^2.4.0",
+    "@x402/evm": "^2.4.0",
     "@xmtp/xmtp-js": "^11.0.0",
     "@xmtp/content-type-remote-attachment": "^1.0.0",
     "bullmq": "^5.0.0",
