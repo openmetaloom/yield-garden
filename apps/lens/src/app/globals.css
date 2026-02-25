@@ -1,0 +1,452 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   YIELD.GARDEN - THE LENS
+   Theme System: Farm (Corporate Extraction) vs Garden (Organic Cultivation)
+   ============================================================================ */
+
+:root {
+  /* Farm Theme - Corporate Extraction */
+  --farm-coral: #FF6B6B;
+  --farm-yellow: #FFE66D;
+  --farm-teal: #4ECDC4;
+  --farm-white: #F7FFF7;
+  --farm-dark: #1a1a2e;
+  --farm-gray: #4a4a6a;
+  
+  /* Garden Theme - Organic Cultivation */
+  --garden-void: #0a0a0f;
+  --garden-cyan: #00f5d4;
+  --garden-purple: #9b5de5;
+  --garden-pink: #f15bb5;
+  --garden-text: #e0e0ff;
+  --garden-dim: #6a6a8a;
+  
+  /* Animation Timing */
+  --farm-ease: linear;
+  --garden-ease: cubic-bezier(0.34, 1.56, 0.64, 1);
+  
+  /* Default (light mode) */
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* ============================================================================
+   Base Styles
+   ============================================================================ */
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* ============================================================================
+   Farm Theme Classes
+   ============================================================================ */
+
+.farm-bg {
+  background-color: var(--farm-dark);
+  color: var(--farm-white);
+}
+
+.farm-card {
+  background: linear-gradient(135deg, var(--farm-dark) 0%, #252540 100%);
+  border: 1px solid var(--farm-gray);
+  border-radius: 4px;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.farm-text-coral { color: var(--farm-coral); }
+.farm-text-yellow { color: var(--farm-yellow); }
+.farm-text-teal { color: var(--farm-teal); }
+.farm-text-white { color: var(--farm-white); }
+
+.farm-border { border-color: var(--farm-gray); }
+
+.farm-glow-coral {
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+.farm-glow-teal {
+  box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+}
+
+/* Farm Digital Display */
+.farm-digital {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  letter-spacing: 0.05em;
+}
+
+.farm-digital-display {
+  background: #0d0d1a;
+  border: 2px solid var(--farm-gray);
+  border-radius: 2px;
+  padding: 0.5rem 1rem;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  color: var(--farm-teal);
+  text-shadow: 0 0 5px rgba(78, 205, 196, 0.5);
+}
+
+/* Farm Grid Pattern */
+.farm-grid {
+  background-image: 
+    linear-gradient(rgba(78, 205, 196, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(78, 205, 196, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ============================================================================
+   Garden Theme Classes
+   ============================================================================ */
+
+.garden-bg {
+  background-color: var(--garden-void);
+  color: var(--garden-text);
+}
+
+.garden-card {
+  background: linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(20, 20, 35, 0.8) 100%);
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  border-radius: 16px;
+  box-shadow: 
+    0 4px 20px rgba(0, 245, 212, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.garden-text-cyan { color: var(--garden-cyan); }
+.garden-text-purple { color: var(--garden-purple); }
+.garden-text-pink { color: var(--garden-pink); }
+.garden-text-dim { color: var(--garden-dim); }
+
+.garden-border { border-color: rgba(0, 245, 212, 0.3); }
+
+.garden-glow-cyan {
+  box-shadow: 0 0 20px rgba(0, 245, 212, 0.4), 0 0 40px rgba(0, 245, 212, 0.2);
+}
+
+.garden-glow-purple {
+  box-shadow: 0 0 20px rgba(155, 93, 229, 0.4), 0 0 40px rgba(155, 93, 229, 0.2);
+}
+
+/* Garden Organic Shapes */
+.garden-organic {
+  border-radius: 20px 40px 30px 50px;
+}
+
+.garden-organic-reverse {
+  border-radius: 40px 20px 50px 30px;
+}
+
+/* Garden Breathing Animation */
+@keyframes garden-breathe {
+  0%, 100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% { 
+    transform: scale(1.02);
+    opacity: 0.95;
+  }
+}
+
+.garden-breathe {
+  animation: garden-breathe 4s var(--garden-ease) infinite;
+}
+
+/* Garden Pulse */
+@keyframes garden-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 10px rgba(0, 245, 212, 0.3);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(0, 245, 212, 0.6), 0 0 60px rgba(0, 245, 212, 0.3);
+  }
+}
+
+.garden-pulse {
+  animation: garden-pulse 3s var(--garden-ease) infinite;
+}
+
+/* ============================================================================
+   Animations - Farm (Mechanical)
+   ============================================================================ */
+
+@keyframes farm-scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+.farm-scanline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, var(--farm-teal), transparent);
+  opacity: 0.5;
+  animation: farm-scanline 2s linear infinite;
+}
+
+@keyframes farm-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.farm-blink {
+  animation: farm-blink 1s steps(2) infinite;
+}
+
+@keyframes farm-slide-in {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.farm-slide-in {
+  animation: farm-slide-in 0.2s linear forwards;
+}
+
+/* ============================================================================
+   Animations - Garden (Organic)
+   ============================================================================ */
+
+@keyframes garden-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(1deg); }
+  75% { transform: translateY(5px) rotate(-1deg); }
+}
+
+.garden-float {
+  animation: garden-float 6s var(--garden-ease) infinite;
+}
+
+@keyframes garden-grow {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.garden-grow {
+  animation: garden-grow 0.5s var(--garden-ease) forwards;
+}
+
+@keyframes garden-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.garden-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 245, 212, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: garden-shimmer 3s linear infinite;
+}
+
+/* ============================================================================
+   Chart Styles
+   ============================================================================ */
+
+/* Farm Chart Theme */
+.farm-chart .recharts-cartesian-grid-horizontal line,
+.farm-chart .recharts-cartesian-grid-vertical line {
+  stroke: var(--farm-gray);
+  stroke-opacity: 0.3;
+}
+
+.farm-chart .recharts-x-axis line,
+.farm-chart .recharts-y-axis line {
+  stroke: var(--farm-gray);
+}
+
+.farm-chart .recharts-x-axis text,
+.farm-chart .recharts-y-axis text {
+  fill: var(--farm-white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+}
+
+/* Garden Chart Theme */
+.garden-chart .recharts-cartesian-grid-horizontal line,
+.garden-chart .recharts-cartesian-grid-vertical line {
+  stroke: rgba(0, 245, 212, 0.1);
+}
+
+.garden-chart .recharts-x-axis line,
+.garden-chart .recharts-y-axis line {
+  stroke: rgba(0, 245, 212, 0.2);
+}
+
+.garden-chart .recharts-x-axis text,
+.garden-chart .recharts-y-axis text {
+  fill: var(--garden-dim);
+  font-size: 10px;
+}
+
+/* ============================================================================
+   Activity Grid Styles
+   ============================================================================ */
+
+.farm-slot {
+  aspect-ratio: 1;
+  background: var(--farm-dark);
+  border: 1px solid var(--farm-gray);
+  transition: all 0.1s linear;
+}
+
+.farm-slot.active {
+  background: var(--farm-teal);
+  box-shadow: 0 0 10px var(--farm-teal);
+}
+
+.farm-slot.processing {
+  background: var(--farm-yellow);
+  box-shadow: 0 0 10px var(--farm-yellow);
+}
+
+/* ============================================================================
+   Message Card Styles
+   ============================================================================ */
+
+/* Farm Message Card */
+.farm-message-card {
+  background: linear-gradient(135deg, #1a1a2e 0%, #252540 100%);
+  border: 1px solid var(--farm-gray);
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.farm-message-card.outgoing {
+  border-left: 3px solid var(--farm-teal);
+  background: linear-gradient(135deg, #1a2a2e 0%, #253540 100%);
+}
+
+.farm-message-card .receipt {
+  font-size: 10px;
+  color: var(--farm-teal);
+  font-family: monospace;
+}
+
+/* Garden Message Card */
+.garden-message-card {
+  background: rgba(10, 10, 15, 0.8);
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  border-radius: 20px 30px 25px 35px;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(5px);
+}
+
+.garden-message-card.outgoing {
+  border-color: rgba(155, 93, 229, 0.4);
+  background: rgba(20, 15, 30, 0.9);
+  box-shadow: 
+    0 4px 20px rgba(155, 93, 229, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.garden-message-card.receiving {
+  animation: garden-grow 0.4s var(--garden-ease) forwards;
+}
+
+/* ============================================================================
+   Scrollbar Styles
+   ============================================================================ */
+
+/* Farm Scrollbar */
+.farm-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.farm-scroll::-webkit-scrollbar-track {
+  background: var(--farm-dark);
+}
+
+.farm-scroll::-webkit-scrollbar-thumb {
+  background: var(--farm-gray);
+  border-radius: 0;
+}
+
+.farm-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--farm-teal);
+}
+
+/* Garden Scrollbar */
+.garden-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.garden-scroll::-webkit-scrollbar-track {
+  background: var(--garden-void);
+}
+
+.garden-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 245, 212, 0.2);
+  border-radius: 4px;
+}
+
+.garden-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 212, 0.4);
+}
+
+/* Font Variables */
+.font-sans {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+/* ============================================================================
+   Navigation Styles
+   ============================================================================ */
+
+.nav-farm-active {
+  border-bottom-color: var(--farm-coral) !important;
+  color: var(--farm-coral) !important;
+}
+
+.nav-garden-active {
+  border-bottom-color: var(--garden-cyan) !important;
+  color: var(--garden-cyan) !important;
+}
+
+.nav-both-active {
+  border-bottom-color: var(--farm-yellow) !important;
+  color: var(--farm-yellow) !important;
+}

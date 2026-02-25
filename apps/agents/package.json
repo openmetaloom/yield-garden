@@ -1,0 +1,31 @@
+{
+  "name": "@yield-garden/agents",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/index.js",
+    "farm": "tsx src/farm/index.ts",
+    "garden": "tsx src/garden/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@coinbase/x402": "^0.1.0",
+    "@coinbase/x402-fetch": "^0.1.0",
+    "@xmtp/xmtp-js": "^11.0.0",
+    "@xmtp/content-type-remote-attachment": "^1.0.0",
+    "bullmq": "^5.0.0",
+    "ethers": "^6.9.0",
+    "ioredis": "^5.3.2",
+    "openai": "^4.20.0",
+    "@yield-garden/shared": "workspace:*",
+    "@yield-garden/contracts": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "@yield-garden/lens",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.0.0",
+    "@tanstack/react-query": "^5.17.0",
+    "@wagmi/core": "^2.0.0",
+    "@xmtp/xmtp-js": "^11.0.0",
+    "@xmtp/content-type-remote-attachment": "^1.0.0",
+    "ethers": "^6.9.0",
+    "framer-motion": "^11.0.0",
+    "next": "14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.10.0",
+    "viem": "^2.0.0",
+    "wagmi": "^2.0.0",
+    "@yield-garden/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3"
+  }
+}

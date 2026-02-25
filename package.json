@@ -1,0 +1,24 @@
+{
+  "name": "yield-garden",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Farm vs Garden agents - TypeScript implementation with XMTP and x402",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "agents:dev": "turbo run dev --filter=@yield-garden/agents",
+    "api:dev": "turbo run dev --filter=@yield-garden/api",
+    "lens:dev": "turbo run dev --filter=@yield-garden/lens"
+  },
+  "devDependencies": {
+    "turbo": "^1.11.0",
+    "typescript": "^5.3.3"
+  },
+  "packageManager": "pnpm@8.12.0",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
