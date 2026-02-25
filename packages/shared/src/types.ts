@@ -92,6 +92,7 @@ export const GardenNegotiationSchema = z.object({
   counterOffer: z.number().optional(),
   accepted: z.boolean().default(false),
   paymentAuthorized: z.boolean().default(false),
+  paymentRequirements: z.any().optional(), // x402 PaymentRequirements
   messages: z.array(NegotiationMessageSchema),
   createdAt: z.string().datetime(),
   updatedAt: z.string().datetime(),
