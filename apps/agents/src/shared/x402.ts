@@ -1,14 +1,12 @@
 /**
  * x402 Payment Handling
- * Official @coinbase/x402 SDK
+ * Using @coinbase/x402 SDK
  */
-import { createPaymentClient, type PaymentClient } from '@coinbase/x402-fetch';
 import type { X402PaymentRequest, X402PaymentAuthorization } from '@yield-garden/shared';
 
 export class X402Handler {
   private recipientAddress: string;
   private chainId: number;
-  private paymentClient: PaymentClient | null = null;
 
   constructor(recipientAddress: string, chainId: number) {
     this.recipientAddress = recipientAddress;

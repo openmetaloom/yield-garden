@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@coinbase/x402": "^0.1.0",
-    "@coinbase/x402-fetch": "^0.1.0",
     "@xmtp/xmtp-js": "^11.0.0",
     "@xmtp/content-type-remote-attachment": "^1.0.0",
     "bullmq": "^5.0.0",
