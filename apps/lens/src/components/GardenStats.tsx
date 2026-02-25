@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import type { GardenStats } from '@yield-garden/shared';
+import type { GardenStats } from '@/types';
 
 // ============================================================================
 // Breathing Counter Component

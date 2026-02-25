@@ -14,7 +14,7 @@ import {
   Bar,
   Legend,
 } from 'recharts';
-import type { FarmStats, GardenStats } from '@yield-garden/shared';
+import type { FarmStats, GardenStats } from '@/types';
 
 // ============================================================================
 // Types

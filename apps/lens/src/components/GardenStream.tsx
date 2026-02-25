@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import type { StreamMessage, GardenNegotiation } from '@yield-garden/shared';
+import type { StreamMessage, GardenNegotiation } from '@/types';
 import { formatAddress, formatTimestamp } from '@/lib/utils';
 import MessageCard from '@/components/MessageCard';
 import NegotiationTree from '@/components/visualization/NegotiationTree';

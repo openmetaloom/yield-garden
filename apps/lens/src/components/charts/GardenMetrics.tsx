@@ -17,7 +17,7 @@ import {
   ResponsiveContainer,
   Area,
 } from 'recharts';
-import type { GardenStats } from '@yield-garden/shared';
+import type { GardenStats } from '@/types';
 
 // ============================================================================
 // Types

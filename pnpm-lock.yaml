@@ -94,9 +94,6 @@ importers:
       '@xmtp/xmtp-js':
         specifier: ^11.0.0
         version: 11.6.3(typescript@5.9.3)
-      '@yield-garden/shared':
-        specifier: workspace:*
-        version: link:../../packages/shared
       ethers:
         specifier: ^6.9.0
         version: 6.16.0

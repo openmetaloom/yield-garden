@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import type { FarmStats } from '@yield-garden/shared';
+import type { FarmStats } from '@/types';
 
 // ============================================================================
 // Animated Digital Counter

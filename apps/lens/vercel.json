@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd ../.. && npm install -g pnpm@8.12.0 && pnpm install && pnpm build --filter=@yield-garden/shared --filter=@yield-garden/lens",
+  "buildCommand": "pnpm install && pnpm build",
   "outputDirectory": ".next",
   "framework": "nextjs"
 }

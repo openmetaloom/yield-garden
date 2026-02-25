@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import type { StreamMessage } from '@yield-garden/shared';
+import type { StreamMessage } from '@/types';
 import { formatAddress, formatTimestamp } from '@/lib/utils';
 
 // ============================================================================
